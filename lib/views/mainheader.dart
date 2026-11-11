@@ -11,7 +11,7 @@ class MainHeader extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 45,
-          backgroundImage: NetworkImage(account.imageUrl),
+          backgroundImage: AssetImage(account.imageUrl),
         ),
         const SizedBox(height: 8),
         Text(

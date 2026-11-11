@@ -23,8 +23,8 @@ class FriendList extends StatelessWidget {
             itemCount: friends.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
-              crossAxisSpacing: 6,
-              mainAxisSpacing: 6,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
               childAspectRatio: 0.8,
             ),
             itemBuilder: (context, i) {
@@ -33,19 +33,25 @@ class FriendList extends StatelessWidget {
                 margin: EdgeInsets.zero,
                 clipBehavior: Clip.antiAlias,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Expanded(
                       child: Image.asset(
                         f.imageUrl,
-                        width: double.infinity,
                         fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
                         errorBuilder: (_, __, ___) =>
                             const Center(child: Icon(Icons.broken_image)),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Text(f.name),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Text(
+                        f.name,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),

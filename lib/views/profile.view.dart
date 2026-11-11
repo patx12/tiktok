@@ -10,6 +10,8 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).padding.bottom;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFDF4FF),
@@ -18,17 +20,21 @@ class ProfileView extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            MainHeader(account: UserData.account),
-            InfoHeader(account: UserData.account),
-            const Divider(height: 1),
-            FriendList(friends: UserData.friends),
-            Container(height: 8, color: Colors.grey),
-            PostList(posts: UserData.posts),
-          ],
-        ),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(child: MainHeader(account: UserData.account)),
+          SliverToBoxAdapter(child: InfoHeader(account: UserData.account)),
+          const SliverToBoxAdapter(child: Divider(height: 1)),
+          SliverToBoxAdapter(child: FriendList(friends: UserData.friends)),
+          SliverToBoxAdapter(child: Container(height: 8, color: Colors.grey)),
+          const SliverToBoxAdapter(child: PostsTitle()),
+          SliverList.builder(
+            itemCount: UserData.posts.length,
+            itemBuilder: (context, i) => PostItem(post: UserData.posts[i]),
+          ),
+          // keeps the last post clear of the phone's navigation bar
+          SliverToBoxAdapter(child: SizedBox(height: bottomInset + 24)),
+        ],
       ),
     );
   }
